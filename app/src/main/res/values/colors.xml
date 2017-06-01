@@ -3,4 +3,22 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="text">#FFFFFF</color>
+    <color name="primary_text">#212121</color>
+    <color name="accent_light">#E76999</color>
+
+    <color name="half_transparent">#55000000</color>
+
+    <color name="ripple_orange_light">#FFD180</color>
+    <color name="ripple_red_light">#EF9A9A</color>
+    <color name="ripple_blue_light">#81D4FA</color>
+    <color name="ripple_pink_light">#F6A5C1</color>
+
+    <color name="good_bomber">#fe81ab</color>
+    <color name="good_bomber_ripple">#F8BBD0</color>
+    <color name="normal_bomber">#b677d7</color>
+    <color name="normal_bomber_ripple">#E1BEE7</color>
+    <color name="bad_bomber">#6372c2</color>
+    <color name="bad_bomber_ripple">#C5CAE9</color>
 </resources>
