@@ -16,7 +16,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(Color.parseColor("#20000000"));
 
     }
 }
