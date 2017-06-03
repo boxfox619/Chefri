@@ -46,14 +46,14 @@
                         android:id="@+id/text_release_date"
                         tools:text="날짜"
                         android:layout_marginTop="4dp"
-                        android:drawableLeft="@mipmap/ic_launcher"/>
+                        android:drawableLeft="@drawable/luncher"/>
 
                     <TextView
                         style="@style/MovieDetailList"
                         android:id="@+id/text_duration"
                         tools:text="기간"
                         android:layout_marginBottom="4dp"
-                        android:drawableLeft="@mipmap/ic_launcher"/>
+                        android:drawableLeft="@drawable/luncher"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -220,7 +220,7 @@
                 android:id="@+id/fab_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fab_iconSrc="@mipmap/ic_launcher"
+                app:fab_iconSrc="@drawable/luncher"
                 app:fab_backgroundColor="@color/colorAccent"
                 app:fab_elevation="4dp"
                 app:rd_rippleColor="@color/accent_light"

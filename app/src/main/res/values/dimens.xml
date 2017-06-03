@@ -2,5 +2,6 @@
 <resources>
     <dimen name="card_item_padding">3dp</dimen>
     <dimen name="parallax_image_height">330dp</dimen>
+    <dimen name="search_bar_height">60dp</dimen>
 
 </resources>

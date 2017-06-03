@@ -30,11 +30,20 @@ public class PostCardAdaptor extends RecyclerView.Adapter<PostCardViewHolder> {
 
     @Override
     public void onBindViewHolder(PostCardViewHolder holder, int position) {
-
+        PostCardItem item = items.get(position);
+        holder.setName(item.getName());
+        holder.setText(item.getSubInfo());
+        holder.setProfileImage(item.getProfileImageUrl());
+        holder.setBackgroundImage(item.getBgimageUrl());
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void add(PostCardItem item){
+        items.add(item);
+        this.notifyDataSetChanged();
     }
 }
