@@ -3,8 +3,11 @@ package com.boxfox.chefriapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    private LinearLayout cardListLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
