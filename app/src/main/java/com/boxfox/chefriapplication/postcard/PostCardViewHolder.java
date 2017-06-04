@@ -3,6 +3,7 @@ package com.boxfox.chefriapplication.postcard;
 import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,11 +37,14 @@ public class PostCardViewHolder extends RecyclerView.ViewHolder {
     }
 
     private void setOnClickListener(){
-        itemView.setOnClickListener(new View.OnClickListener() {
+        Log.d(PostCardViewHolder.class.getName(), "setOnClick");
+        itemView.findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(PostCardViewHolder.class.getName(), "click");
                 Intent intent = new Intent(itemView.getContext(), RecipeDetailActivity.class);
                 intent.putExtra("Number", number);
+                itemView.getContext().startActivity(intent);
             }
         });
     }
