@@ -7,12 +7,13 @@ package com.boxfox.chefriapplication.postcard;
 public class PostCardItem {
     private String name;
     private String subInfo;
-    private int likes;
+    private int likes, postNumber;
 
     private String bgimageUrl;
     private String profileImageUrl;
 
-    public PostCardItem(String name, String subInfo, int likes, String bgimageUrl, String profileImageUrl) {
+    public PostCardItem(int postNumber, String name, String subInfo, int likes, String bgimageUrl, String profileImageUrl) {
+        this.postNumber = postNumber;
         this.name = name;
         this.subInfo = subInfo;
         this.likes = likes;
@@ -58,5 +59,13 @@ public class PostCardItem {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public int getPostNumber() {
+        return postNumber;
+    }
+
+    public void setPostNumber(int postNumber) {
+        this.postNumber = postNumber;
     }
 }

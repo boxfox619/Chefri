@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         });
         cardAdaptor = new PostCardAdaptor();
         cardListView.setAdapter(cardAdaptor);
-        cardAdaptor.add(new PostCardItem("test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
-        cardAdaptor.add(new PostCardItem("test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
-        cardAdaptor.add(new PostCardItem("test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
+        cardAdaptor.add(new PostCardItem(1, "test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
+        cardAdaptor.add(new PostCardItem(2, "test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
+        cardAdaptor.add(new PostCardItem(3, "test", "subInfo asdasd", 50, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJTkGxzhDu3iCYyt2Qg8Yi8LKy_vBK-uQwac2SRjwxCgA30Rujsw", "https://logopond.com/logos/685456e8a158ec3138b1eae0b6a321cc.png"));
     }
 }

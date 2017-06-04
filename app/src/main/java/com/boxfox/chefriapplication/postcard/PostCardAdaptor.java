@@ -35,6 +35,7 @@ public class PostCardAdaptor extends RecyclerView.Adapter<PostCardViewHolder> {
         holder.setText(item.getSubInfo());
         holder.setProfileImage(item.getProfileImageUrl());
         holder.setBackgroundImage(item.getBgimageUrl());
+        holder.setNumber(item.getPostNumber());
     }
 
     @Override

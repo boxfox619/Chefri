@@ -1,5 +1,6 @@
 package com.boxfox.chefriapplication.postcard;
 
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.boxfox.chefriapplication.R;
+import com.boxfox.chefriapplication.RecipeDetailActivity;
 import com.pkmmte.view.CircularImageView;
 
 /**
@@ -18,6 +20,7 @@ public class PostCardViewHolder extends RecyclerView.ViewHolder {
     private View bgView;
     private CircularImageView profileImageView;
     private ImageView bgImageView;
+    private int number;
 
     private TextView tv_name, tv_info;
 
@@ -28,6 +31,22 @@ public class PostCardViewHolder extends RecyclerView.ViewHolder {
         tv_name = (TextView) itemView.findViewById(R.id.tv_name);
         tv_info = (TextView) itemView.findViewById(R.id.tv_info);
         bgImageView = (ImageView) itemView.findViewById(R.id.bg_image);
+        setOnClickListener();
+        setRandomColor();
+    }
+
+    private void setOnClickListener(){
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(itemView.getContext(), RecipeDetailActivity.class);
+                intent.putExtra("Number", number);
+            }
+        });
+    }
+
+    public void setNumber(int number){
+        this.number = number;
     }
 
     public void setName(String name){
