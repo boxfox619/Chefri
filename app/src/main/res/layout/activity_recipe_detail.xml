@@ -8,7 +8,6 @@
     <com.github.ksoichiro.android.observablescrollview.ObservableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scroll"
         android:fillViewport="true">
 
         <RelativeLayout
@@ -16,218 +15,134 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/image_photo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/parallax_image_height"
-                android:id="@+id/image_photo"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_bg"
-                />
+                android:src="@drawable/test_bg" />
 
             <LinearLayout
+                android:id="@+id/layout_movie_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_below="@id/image_photo"
-                android:id="@+id/layout_movie_content"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:orientation="vertical"
-                    android:id="@+id/layout_title"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    >
-
-                    <TextView
-                        style="@style/MovieDetailList"
-                        android:id="@+id/text_release_date"
-                        tools:text="날짜"
-                        android:layout_marginTop="4dp"
-                        android:drawableLeft="@drawable/luncher"/>
-
-                    <TextView
-                        style="@style/MovieDetailList"
-                        android:id="@+id/text_duration"
-                        tools:text="기간"
-                        android:layout_marginBottom="4dp"
-                        android:drawableLeft="@drawable/luncher"/>
-                </LinearLayout>
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@null"
+                    android:layout_marginBottom="4dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    >
+                    android:background="@null"
+                    android:orientation="horizontal">
 
-                    <com.rey.material.widget.Button
+                    <LinearLayout
                         style="@style/MovieDetailButton"
-                        android:id="@+id/button_photo"
-                        android:text="fab_photo"
-                        android:textColor="@color/good_bomber"
-                        app:rd_rippleColor="@color/good_bomber_ripple"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <com.rey.material.widget.Button
+                        <ImageView
+                            android:layout_marginRight="1dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_recipe_lovers"/>
+
+                        <TextView
+                            android:id="@+id/recipe_lovers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9.2k" />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
                         style="@style/MovieDetailButton"
-                        android:text="fab_trailer"
-                        android:id="@+id/button_trailer"
-                        android:textColor="@color/normal_bomber"
-                        app:rd_rippleColor="@color/normal_bomber_ripple"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                    <com.rey.material.widget.Button
+                        <ImageView
+                            android:layout_marginRight="1dp"
+                            android:id="@+id/imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_cook_duration" />
+
+                        <TextView
+                            android:id="@+id/cook_duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10s" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         style="@style/MovieDetailButton"
-                        android:text="fab_comment"
-                        android:id="@+id/button_comment"
-                        android:textColor="@color/bad_bomber"
-                        app:rd_rippleColor="@color/bad_bomber_ripple"
-                        />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_marginRight="1dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_recipe_kcal"/>
+
+                        <TextView
+                            android:id="@+id/recipe_kcal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="512kcal" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray"/>
+                    android:background="@android:color/darker_gray" />
 
                 <TextView
-                    style="@style/MovieDetailTitle"
+                    style="@style/RecipeDetailTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="text_description"
-                    />
+                    android:text="text_description" />
 
-                <TextView
-                    style="@style/MovieDetailContent"
-                    android:id="@+id/text_description"
-                    tools:text="test_description"
-                    android:layout_marginBottom="0dp"
-                    android:paddingBottom="8dp"
-                    />
-
-                <com.rey.material.widget.Button
-                    style="@style/MovieDetailButton"
-                    android:id="@+id/button_read_more"
-                    android:text="text_more"
-                    android:textColor="@color/colorAccent"
-                    app:rd_rippleColor="@color/ripple_pink_light"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:padding="0dp"
-                    android:layout_height="32dp"
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray"/>
-
-                <TextView
-                    style="@style/MovieDetailTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="text_genre"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    >
-                    <ViewStub
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/view_genre1"
-                        android:layout="@layout/item_genre"/>
-                    <ViewStub
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:id="@+id/view_genre2"
-                        android:layout="@layout/item_genre"/>
-                    <ViewStub
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:id="@+id/view_genre3"
-                        android:layout="@layout/item_genre"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray"/>
-
-                <TextView
-                    style="@style/MovieDetailTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="text_actors"/>
-                <TextView
-                    style="@style/MovieDetailContent"
-                    android:id="@+id/text_actors"
-                    tools:text="test_movie_name"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@android:color/darker_gray"/>
-
-                <TextView
-                    style="@style/MovieDetailTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="text_director"/>
-
-                <TextView
-                    style="@style/MovieDetailContent"
-                    android:id="@+id/text_director"
-                    tools:text="test_movie_name"
-                    android:paddingBottom="8dp"
-                    />
 
             </LinearLayout>
 
-            <TextView
-                style="@style/MovieDetailTitle"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_title_chinese"
-                android:background="@color/half_transparent"
-                tools:text="test_movie_name"
-                android:gravity="center_vertical"
-                android:layout_above="@id/layout_movie_content"/>
+                android:layout_height="@dimen/recipe_detail_title_height"
+                android:layout_above="@id/layout_movie_content"
+                android:background="@color/half_transparent">
 
-            <com.rey.material.widget.FloatingActionButton
-                style="@style/Material.Drawable.Ripple.Touch.Light"
-                android:id="@+id/fab_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_iconSrc="@drawable/luncher"
-                app:fab_backgroundColor="@color/colorAccent"
-                app:fab_elevation="4dp"
-                app:rd_rippleColor="@color/accent_light"
-                app:fab_animDuration="350"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="295dp"/>
+                <TextView
+                    style="@style/RecipeDetailTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:text="연어초밥"
+                    android:id="@+id/recipe_name" />
+
+                <TextView
+                    style="@style/RecipeDetailSubTitle"
+                    android:id="@+id/recipe_materials"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="viewEnd"
+                    android:text="teast"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignEnd="@+id/recipe_name" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
 

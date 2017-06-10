@@ -34,7 +34,6 @@ dependencies {
     compile 'com.pkmmte.view:circularimageview:1.1'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
-    compile 'com.github.rey5137:material:1.1.0'
     compile 'com.googlecode.android-query:android-query:0.25.9'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.jakewharton:butterknife:6.1.0'
