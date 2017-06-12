@@ -17,18 +17,33 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+import com.androidquery.util.Constants;
 import com.boxfox.chefriapplication.databinding.ActivityRecipeWriteBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RecipeWriteActivity extends AppCompatActivity {
 
@@ -36,6 +51,8 @@ public class RecipeWriteActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION = 1234;
 
     private ActivityRecipeWriteBinding binding;
+
+    private List<String> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,26 +62,12 @@ public class RecipeWriteActivity extends AppCompatActivity {
         binding.btnAddText.setOnClickListener(createBtnTextClickListener());
         binding.btnAddImage.setOnClickListener(createBtnImageClickListener());
         binding.fabSave.setOnClickListener(createFabSaveClickListener());
+        binding.tvPostTitle.clearFocus();
+        imageList = new ArrayList<String>();
+        RecipeWriteActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event){
-        Log.d("Test", "asd");
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (binding.tvPostTitle.isFocused()) {
-                Rect outRect = new Rect();
-                binding.tvPostTitle.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    binding.tvPostTitle.clearFocus();
-                    RecipeWriteActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
-    }
-
-    @Override
-
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         if (requestCode == REQUEST_PERMISSION) {
@@ -83,14 +86,26 @@ public class RecipeWriteActivity extends AppCompatActivity {
             if (data == null) {
                 return;
             }
-            ImageView imageview = (ImageView) getLayoutInflater().inflate(R.layout.view_post_image, null);
-            try {
-                imageview.setImageBitmap(getBitmapFromUri(data.getData()));
-            } catch (IOException e) {
-                e.printStackTrace();
-                imageview.setImageDrawable(getResources().getDrawable(R.drawable.ic_crash_image));
-            }
-            binding.content.addView(imageview);
+            final AQuery aq = new AQuery(RecipeWriteActivity.this);
+            final String imageUrl = System.currentTimeMillis() + "";
+            File file = null;
+            HashMap<String, Object> params = new HashMap<String, Object>();
+            params.put(imageUrl, new File(data.getData().getPath());
+            aq.ajax("url", params, JSONObject.class, new AjaxCallback<JSONObject>() {
+                @Override
+                public void callback(String url, JSONObject object,
+                                     AjaxStatus status) {
+                    ImageView imageview = (ImageView) getLayoutInflater().inflate(R.layout.view_post_image, null);
+                    if (status.getCode() == 200) {
+                        AQuery aq = new AQuery(RecipeWriteActivity.this);
+                        aq.id(imageview).image("url" + imageUrl);
+                        imageList.add(imageUrl);
+                    } else {
+                        imageview.setImageDrawable(getResources().getDrawable(R.drawable.ic_crash_image));
+                    }
+                    binding.content.addView(imageview);
+                }
+            });
         }
     }
 
@@ -180,9 +195,48 @@ public class RecipeWriteActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                JSONArray arr = new JSONArray();
                 for (int i = 0; i < binding.content.getChildCount(); i++) {
-
+                    View view = binding.content.getChildAt(i);
+                    String type = null;
+                    String value = null;
+                    if (view instanceof EditText) {
+                        if (((EditText) view).getTextSize() == TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, getResources().getDisplayMetrics())) {
+                            type = "content";
+                        } else {
+                            type = "title";
+                        }
+                        value = ((EditText) view).getText().toString();
+                    } else if (view instanceof ImageView) {
+                        type = "image";
+                        value = imageList.get(i);
+                    }
+                    if (type == null || value == null) continue;
+                    try {
+                        JSONObject object = new JSONObject();
+                        object.put("Type", type);
+                        object.put("Value", value);
+                        arr.put(object);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
+                AjaxCallback<JSONObject> cb = new AjaxCallback<JSONObject>() {
+                    @Override
+                    public void callback(String url, JSONObject html, AjaxStatus status) {
+                        System.out.println(html);
+                    }
+                };
+
+                AQuery aq = new AQuery(RecipeWriteActivity.this);
+                cb.header("Authorization", "key=yourkey");
+                cb.header("Content-Type", "application/json; charset=utf-8");
+
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put(AQuery.POST_ENTITY, arr.toString());
+                cb.params(params);
+                aq.ajax("https://yourdomain.com", JSONObject.class, cb);
+
             }
         };
     }
