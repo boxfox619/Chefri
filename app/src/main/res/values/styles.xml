@@ -60,6 +60,7 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
     </style>
+
     <style name="RecipeDetailSubTitle" parent="RecipeDetailTitle">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">@android:color/white</item>
