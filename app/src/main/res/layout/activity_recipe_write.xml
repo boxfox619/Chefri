@@ -46,13 +46,13 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/linearLayout">
 
-            <LinearLayout
+            <com.boxfox.chefriapplication.post.PostLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            </LinearLayout>
+            </com.boxfox.chefriapplication.post.PostLayout>
 
         </ScrollView>
 

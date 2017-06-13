@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
@@ -18,19 +17,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.androidquery.util.Constants;
 import com.boxfox.chefriapplication.databinding.ActivityRecipeWriteBinding;
 
 import org.json.JSONArray;
@@ -47,12 +42,12 @@ import java.util.Map;
 
 public class RecipeWriteActivity extends AppCompatActivity {
 
+    public static final String IMG_URL = "";
+
     private static final int PICK_PHOTO = 123;
     private static final int REQUEST_PERMISSION = 1234;
 
     private ActivityRecipeWriteBinding binding;
-
-    private List<String> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +58,6 @@ public class RecipeWriteActivity extends AppCompatActivity {
         binding.btnAddImage.setOnClickListener(createBtnImageClickListener());
         binding.fabSave.setOnClickListener(createFabSaveClickListener());
         binding.tvPostTitle.clearFocus();
-        imageList = new ArrayList<String>();
         RecipeWriteActivity.this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
@@ -90,32 +84,19 @@ public class RecipeWriteActivity extends AppCompatActivity {
             final String imageUrl = System.currentTimeMillis() + "";
             File file = null;
             HashMap<String, Object> params = new HashMap<String, Object>();
-            params.put(imageUrl, new File(data.getData().getPath());
+            params.put(imageUrl, new File(data.getData().getPath()));
             aq.ajax("url", params, JSONObject.class, new AjaxCallback<JSONObject>() {
                 @Override
                 public void callback(String url, JSONObject object,
                                      AjaxStatus status) {
-                    ImageView imageview = (ImageView) getLayoutInflater().inflate(R.layout.view_post_image, null);
                     if (status.getCode() == 200) {
-                        AQuery aq = new AQuery(RecipeWriteActivity.this);
-                        aq.id(imageview).image("url" + imageUrl);
-                        imageList.add(imageUrl);
+                        binding.content.addImage(IMG_URL + imageUrl);
                     } else {
-                        imageview.setImageDrawable(getResources().getDrawable(R.drawable.ic_crash_image));
+                        binding.content.addImage(getResources().getDrawable(R.drawable.ic_crash_image));
                     }
-                    binding.content.addView(imageview);
                 }
             });
         }
-    }
-
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-
-        parcelFileDescriptor.close();
-        return bitmap;
     }
 
     private void pickImage() {
@@ -134,24 +115,7 @@ public class RecipeWriteActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText et = (EditText) getLayoutInflater().inflate(R.layout.view_post_et_title, null);
-                binding.content.addView(et);
-                et.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (count == 0 && s.length() == 0) {
-                            binding.content.removeView(et);
-                        }
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                    }
-                });
+                binding.content.addLageText();
             }
         };
     }
@@ -160,24 +124,7 @@ public class RecipeWriteActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText et = (EditText) getLayoutInflater().inflate(R.layout.view_post_et_content, null);
-                binding.content.addView(et);
-                et.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (count == 0 && s.length() == 0) {
-                            binding.content.removeView(et);
-                        }
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                    }
-                });
+                binding.content.addSmallText();
             }
         };
     }
@@ -195,32 +142,7 @@ public class RecipeWriteActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONArray arr = new JSONArray();
-                for (int i = 0; i < binding.content.getChildCount(); i++) {
-                    View view = binding.content.getChildAt(i);
-                    String type = null;
-                    String value = null;
-                    if (view instanceof EditText) {
-                        if (((EditText) view).getTextSize() == TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, getResources().getDisplayMetrics())) {
-                            type = "content";
-                        } else {
-                            type = "title";
-                        }
-                        value = ((EditText) view).getText().toString();
-                    } else if (view instanceof ImageView) {
-                        type = "image";
-                        value = imageList.get(i);
-                    }
-                    if (type == null || value == null) continue;
-                    try {
-                        JSONObject object = new JSONObject();
-                        object.put("Type", type);
-                        object.put("Value", value);
-                        arr.put(object);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                JSONObject document = binding.content.getDocument();
                 AjaxCallback<JSONObject> cb = new AjaxCallback<JSONObject>() {
                     @Override
                     public void callback(String url, JSONObject html, AjaxStatus status) {
@@ -233,7 +155,7 @@ public class RecipeWriteActivity extends AppCompatActivity {
                 cb.header("Content-Type", "application/json; charset=utf-8");
 
                 Map<String, Object> params = new HashMap<String, Object>();
-                params.put(AQuery.POST_ENTITY, arr.toString());
+                params.put(AQuery.POST_ENTITY, document.toString());
                 cb.params(params);
                 aq.ajax("https://yourdomain.com", JSONObject.class, cb);
 
