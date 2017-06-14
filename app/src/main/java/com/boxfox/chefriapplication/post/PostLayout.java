@@ -60,11 +60,21 @@ public class PostLayout extends LinearLayout {
         super.addView(imageview);
     }
 
-    public void drawPost(JSONObject document) {
+    public void drawAsPost(JSONObject document) {
         this.document = document;
+        drawAsPost();
+    }
 
+    public void drawAsPost() {
 
+    }
 
+    public void drawAsEditor(JSONObject document) {
+        this.document = document;
+        drawAsEditor();
+    }
+
+    public void drawAsEditor() {
 
     }
 

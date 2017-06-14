@@ -72,4 +72,16 @@
         <item name="android:layout_marginTop">0dp</item>
     </style>
 
+    <style name="SearchBarItem" parent="MovieDetailButton">
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:fontFamily">@string/font_roboto_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>
