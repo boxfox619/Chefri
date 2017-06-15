@@ -21,4 +21,7 @@
     <color name="normal_bomber_ripple">#E1BEE7</color>
     <color name="bad_bomber">#6372c2</color>
     <color name="bad_bomber_ripple">#C5CAE9</color>
+
+
+    <color name="icon">#666666</color>
 </resources>

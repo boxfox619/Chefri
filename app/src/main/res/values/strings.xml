@@ -5,4 +5,7 @@
     <string name="search_food">재료검색</string>
     <string name="search_tools">도구검색</string>
     <string name="search_kcal">칼로리 검색</string>
+
+    <!--url-->
+    <string name="search_url"></string>
 </resources>

@@ -3,7 +3,7 @@
     package="com.boxfox.chefriapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +24,8 @@
             android:theme="@style/DetailTheme" />
         <activity android:name=".SigninActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".RecipeWriteActivity"></activity>
+        <activity android:name=".RecipeWriteActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
