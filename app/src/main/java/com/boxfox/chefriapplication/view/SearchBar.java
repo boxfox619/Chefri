@@ -33,7 +33,6 @@ public class SearchBar extends ViewController implements View.OnClickListener{
             case R.id.search_by_kcal:
                 target = getString(R.string.search_kcal);
         }
-
         Intent intent = new Intent(getContext(), SearchActivity.class);
         getContext().startActivity(intent);
     }

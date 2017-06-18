@@ -108,11 +108,12 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
 
-                <TextView
-                    style="@style/RecipeDetailTitle"
+                <com.boxfox.chefriapplication.post.PostLayout
+                    android:id="@+id/post_content"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="text_description" />
+                    android:layout_height="wrap_content">
+
+                </com.boxfox.chefriapplication.post.PostLayout>
 
 
             </LinearLayout>

@@ -9,6 +9,7 @@ import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
 import com.boxfox.chefriapplication.R;
+import com.boxfox.chefriapplication.postcard.PostCardAdaptor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,15 +26,22 @@ public class DetailSearchBar extends ViewController {
     private ProgressDialog progressDialog;
     private EditText et_searchContext;
 
+    private PostCardAdaptor adpater;
+
     public DetailSearchBar(View view) {
         super(view);
     }
 
+    @Override
     public void init() {
         et_searchContext = findEditTextById(R.id.ed_home_searchbar);
         findImageViewById(R.id.iv_search_icon).setOnClickListener(new SearchClickListener());
         findViewById(R.id.iv_more_icon).setOnClickListener(new MoreClickListener());
         progressDialog = new ProgressDialog(getContext());
+    }
+
+    public void setAdpater(PostCardAdaptor adpater){
+        this.adpater = adpater;
     }
 
     public void chagneTarget(String str){
@@ -55,7 +63,6 @@ public class DetailSearchBar extends ViewController {
                     if(status.getCode() == 200){
                         try {
                             JSONArray arr = new JSONArray(object);
-
                             /** @TODO recyclerview */
                         } catch (JSONException e) {
                             e.printStackTrace();

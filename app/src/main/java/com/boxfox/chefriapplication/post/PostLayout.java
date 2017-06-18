@@ -11,19 +11,24 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.androidquery.AQuery;
 import com.boxfox.chefriapplication.R;
 import com.boxfox.chefriapplication.RecipeWriteActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 /**
  * Created by boxfox on 2017-06-13.
  */
 
 public class PostLayout extends LinearLayout {
+    private boolean mode = false;
     private JSONObject document;
 
     public PostLayout(Context context) {
@@ -35,22 +40,58 @@ public class PostLayout extends LinearLayout {
         document = new JSONObject();
     }
 
-    public void addSmallText() {
-        EditText et = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_et_content, null);
-        super.addView(et);
-        et.addTextChangedListener(new PostWriteTextWatcher(et));
+    public View addSmallText() {
+        View view;
+        if (mode) {
+            TextView tv = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_tv_content, null);
+            view = tv;
+        } else {
+            EditText et = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_et_content, null);
+            String key = document.length() + "";
+            try {
+                document.put(key, new JSONObject().put("Type", "Title"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            et.addTextChangedListener(new PostWriteTextWatcher(et, key));
+            view = et;
+        }
+        super.addView(view);
+        return view;
     }
 
-    public void addLageText() {
-        EditText et = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_et_title, null);
-        super.addView(et);
-        et.addTextChangedListener(new PostWriteTextWatcher(et));
+    public View addLageText() {
+        View view;
+        if (mode) {
+            TextView tv = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_tv_title, null);
+            view = tv;
+        } else {
+            EditText et = (EditText) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_et_title, null);
+            String key = document.length() + "";
+            try {
+                document.put(key, new JSONObject().put("Type", "Title"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            et.addTextChangedListener(new PostWriteTextWatcher(et, key));
+            view = et;
+        }
+        super.addView(view);
+        return view;
     }
 
     public void addImage(String url) {
         ImageView imageview = (ImageView) ((Activity) getContext()).getLayoutInflater().inflate(R.layout.view_post_image, null);
         AQuery aq = new AQuery(getContext());
         aq.id(imageview).image(url);
+        if (!mode) {
+            String key = document.length() + "";
+            try {
+                document.put(key, new JSONObject().put("Type", "Image").put("Url", url));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
         super.addView(imageview);
     }
 
@@ -60,22 +101,40 @@ public class PostLayout extends LinearLayout {
         super.addView(imageview);
     }
 
-    public void drawAsPost(JSONObject document) {
+    public void drawAsPost(JSONObject document) throws JSONException {
         this.document = document;
         drawAsPost();
     }
 
-    public void drawAsPost() {
-
+    public void drawAsPost() throws JSONException {
+        mode = true;
+        draw();
     }
 
-    public void drawAsEditor(JSONObject document) {
+    public void drawAsEditor(JSONObject document) throws JSONException {
         this.document = document;
         drawAsEditor();
     }
 
-    public void drawAsEditor() {
+    public void drawAsEditor() throws JSONException {
+        mode = false;
+        draw();
+    }
 
+    public void draw() throws JSONException {
+        removeAllViews();
+        Iterator<String> keys = document.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            JSONObject object = document.getJSONObject(key);
+            if (object.getString("Type").equals("Title")) {
+                ((EditText) addLageText()).setText(object.getString("Content"));
+            } else if (object.getString("Type").equals("Content")) {
+                ((EditText) addSmallText()).setText(object.getString("Content"));
+            } else if (object.getString("Type").equals("Image")) {
+                addImage(object.getString("Url"));
+            }
+        }
     }
 
     public JSONObject getDocument() {
@@ -84,15 +143,24 @@ public class PostLayout extends LinearLayout {
 
     private class PostWriteTextWatcher implements TextWatcher {
         private View view;
+        private String key;
 
-        PostWriteTextWatcher(View view) {
+        PostWriteTextWatcher(View view, String key) {
             this.view = view;
+            this.key = key;
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (count == 0 && s.length() == 0) {
                 PostLayout.super.removeView(view);
+                document.remove(key);
+            } else {
+                try {
+                    document.getJSONObject(key).put("Content", ((EditText) view).getText());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
