@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isSearchShow;
 
     private PostCardAdaptor cardAdaptor;
-    private View searchLayout;
+    private SearchBar searchBar;
 
     //private ActivityMainBinding binding;
 
@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         //binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         isSearchShow = true;
-        new SearchBar(findViewById(R.id.searchLayout)).init();
+        searchBar = new SearchBar(findViewById(R.id.searchLayout));
+        searchBar.init();
         final RecyclerView cardListView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         cardListView.setLayoutManager(layoutManager);
@@ -39,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     if (isSearchShow) {
-                        searchLayout.animate().translationY(-searchLayout.getHeight());
+                        searchBar.getView().animate().translationY(-searchBar.getView().getHeight());
                         isSearchShow = false;
                     }
                 } else {
                     if (!isSearchShow) {
-                        searchLayout.animate().translationY(0);
+                        searchBar.getView().animate().translationY(0);
                         isSearchShow = true;
                     }
                 }

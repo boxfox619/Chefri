@@ -23,9 +23,12 @@ public class SearchActivity extends AppCompatActivity {
 
         isSearchShow = true;
         cardAdaptor = new PostCardAdaptor();
-        detailSearchBar = new DetailSearchBar(findViewById(R.id.searchLayout));
+
+
+        detailSearchBar = new DetailSearchBar(findViewById(R.id.search_bar));
         detailSearchBar.init();
         detailSearchBar.setAdpater(cardAdaptor);
+
         final RecyclerView cardListView = (RecyclerView) findViewById(R.id.recycler_view);
         cardListView.setAdapter(cardAdaptor);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

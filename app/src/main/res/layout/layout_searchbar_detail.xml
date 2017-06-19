@@ -25,7 +25,7 @@
             android:tint="@color/icon" />
 
         <EditText
-            android:id="@+id/ed_home_searchbar"
+            android:id="@+id/et_home_searchbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/iv_more_icon"

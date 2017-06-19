@@ -1,6 +1,7 @@
 package com.boxfox.chefriapplication.view;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.boxfox.chefriapplication.R;

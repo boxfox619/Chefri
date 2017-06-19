@@ -34,7 +34,7 @@ public class DetailSearchBar extends ViewController {
 
     @Override
     public void init() {
-        et_searchContext = findEditTextById(R.id.ed_home_searchbar);
+        et_searchContext = findEditTextById(R.id.et_home_searchbar);
         findImageViewById(R.id.iv_search_icon).setOnClickListener(new SearchClickListener());
         findViewById(R.id.iv_more_icon).setOnClickListener(new MoreClickListener());
         progressDialog = new ProgressDialog(getContext());
